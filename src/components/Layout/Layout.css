@@ -1,0 +1,403 @@
+/* Modern Layout - OpenAI Inspired Design */
+.modern-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #0a0a0f;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 260px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #0a0a0f;
+  min-height: 100vh;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 64px;
+}
+
+/* Header */
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: rgba(15, 15, 35, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Current Recording Info */
+.current-recording-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  max-width: 500px;
+}
+
+.recording-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.recording-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.recording-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #ffffff 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.recording-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.recording-date,
+.recording-duration {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ai-processed {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.settings-btn:active {
+  transform: scale(0.95);
+}
+
+/* Main Workspace */
+.main-workspace {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 15, 35, 0.3) 0%,
+    rgba(10, 10, 15, 0.8) 100%
+  );
+}
+
+/* Scrollbar Styling */
+.main-workspace::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-workspace::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.main-workspace::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.main-workspace::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 240px;
+  }
+  
+  .main-content.sidebar-collapsed {
+    margin-left: 56px;
+  }
+  
+  .main-header {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .main-workspace {
+    padding: 1.5rem;
+  }
+  
+  .current-recording-info {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .main-content.sidebar-collapsed {
+    margin-left: 0;
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+  }
+  
+  .main-header {
+    padding: 1rem 1.25rem;
+  }
+  
+  .header-left {
+    gap: 1rem;
+  }
+  
+  .current-recording-info {
+    max-width: 300px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .recording-title {
+    font-size: 1rem;
+  }
+  
+  .recording-meta {
+    font-size: 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .main-workspace {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-header {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .header-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .current-recording-info {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .header-actions {
+    align-self: flex-end;
+  }
+  
+  .main-workspace {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-header {
+    padding: 0.875rem;
+  }
+  
+  .current-recording-info {
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .recording-icon {
+    font-size: 1.25rem;
+  }
+  
+  .recording-title {
+    font-size: 0.9375rem;
+  }
+  
+  .recording-meta {
+    font-size: 0.6875rem;
+    flex-wrap: wrap;
+  }
+  
+  .settings-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .main-workspace {
+    padding: 0.875rem;
+  }
+}
+
+/* Animation and Transitions */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.current-recording-info {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.main-workspace > * {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Focus States for Accessibility */
+.mobile-menu-btn:focus,
+.settings-btn:focus {
+  outline: 2px solid rgba(99, 102, 241, 0.5);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .main-header {
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .current-recording-info {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .mobile-menu-btn,
+  .settings-btn {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .mobile-menu-btn:hover,
+  .settings-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .main-content,
+  .mobile-menu-btn,
+  .settings-btn,
+  .current-recording-info {
+    transition: none;
+  }
+  
+  .current-recording-info,
+  .main-workspace > * {
+    animation: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .main-header,
+  .sidebar {
+    display: none;
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .main-workspace {
+    padding: 0;
+    background: transparent;
+  }
+}
