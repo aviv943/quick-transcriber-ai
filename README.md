@@ -44,10 +44,29 @@ A powerful, AI-driven audio transcription application that converts speech to te
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ and npm/yarn
+- **Option 1 (Docker)**: Docker and Docker Compose
+- **Option 2 (Local)**: Node.js 18+ and npm/yarn
 - OpenAI API key with access to Whisper and GPT-4.1
 
-### Installation
+### 🐳 Docker Installation (Recommended)
+
+```bash
+# Clone the repository
+git clone https://github.com/aviv943/quick-transcriber-ai.git
+cd quick-transcriber-ai
+
+# Production deployment
+docker-compose up -d
+
+# Development with hot reload
+docker-compose --profile dev up -d quicktranscriber-dev
+
+# Access the application
+open http://localhost:3000  # Production
+open http://localhost:5173  # Development
+```
+
+### 💻 Local Installation
 
 ```bash
 # Clone the repository
@@ -195,22 +214,54 @@ Robust error handling throughout the application:
 
 ### **Available Scripts**
 ```bash
+# Local development
 npm run dev      # Start development server
 npm run build    # Build for production
 npm run preview  # Preview production build
 npm run lint     # Run ESLint
+
+# Docker development
+docker-compose --profile dev up -d    # Start development container
+docker-compose down                   # Stop all containers
+docker-compose logs -f                # View logs
+docker-compose exec quicktranscriber-dev sh  # Access container shell
+```
+
+### **Docker Commands**
+```bash
+# Production
+docker-compose up -d                  # Start production container
+docker-compose down                   # Stop and remove containers
+docker-compose pull                   # Pull latest images
+docker-compose build --no-cache       # Rebuild images
+
+# Development
+docker-compose --profile dev up       # Start dev container (foreground)
+docker-compose --profile dev down     # Stop dev containers
+
+# Maintenance
+docker system prune -f                # Clean up unused Docker resources
+docker-compose logs quicktranscriber  # View application logs
 ```
 
 ### **Environment Setup**
 The application requires specific headers for FFmpeg to work:
+
+**Local Development (vite.config.ts):**
 ```javascript
-// vite.config.ts
 server: {
   headers: {
     'Cross-Origin-Embedder-Policy': 'require-corp',
     'Cross-Origin-Opener-Policy': 'same-origin',
   },
 }
+```
+
+**Docker Production (nginx.conf):**
+```nginx
+# Required headers for FFmpeg to work
+add_header Cross-Origin-Embedder-Policy "require-corp" always;
+add_header Cross-Origin-Opener-Policy "same-origin" always;
 ```
 
 ### **Key Dependencies**
@@ -220,12 +271,53 @@ server: {
 - **tailwind-merge**: Utility for combining Tailwind classes
 - **class-variance-authority**: Component variant management
 
+## 🐳 Docker Deployment
+
+### **Production Deployment**
+```bash
+# Quick start
+docker-compose up -d
+
+# Custom configuration
+docker-compose -f docker-compose.yaml up -d
+
+# With reverse proxy
+docker-compose --profile proxy up -d
+```
+
+### **Development Environment**
+```bash
+# Start development container with hot reload
+docker-compose --profile dev up -d
+
+# View development logs
+docker-compose logs -f quicktranscriber-dev
+
+# Access development shell
+docker-compose exec quicktranscriber-dev sh
+```
+
+### **Docker Features**
+- **Multi-stage builds**: Optimized production images
+- **Security**: Non-root user, minimal attack surface
+- **Health checks**: Automatic container health monitoring
+- **Hot reload**: Development container with live code updates
+- **Nginx optimization**: Gzip compression, caching, security headers
+- **FFmpeg support**: Proper CORS headers for client-side audio processing
+
+### **Container Architecture**
+- **Production**: React app served by Nginx (Alpine Linux)
+- **Development**: Node.js with Vite dev server and hot reload
+- **Networking**: Isolated Docker network for security
+- **Volumes**: Optional log persistence and SSL certificate mounting
+
 ## 🔐 Security & Privacy
 
 - **Local Processing**: All audio processing happens in your browser
 - **No Data Upload**: Audio files are never uploaded to our servers
 - **API Key Security**: Your OpenAI API key is stored locally only
 - **Privacy First**: No tracking or analytics
+- **Container Security**: Non-root user, minimal base images, security headers
 
 ## 📝 Configuration Options
 
