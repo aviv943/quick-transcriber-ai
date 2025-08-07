@@ -10,8 +10,7 @@ import {
   CheckCircle,
   Clock,
   RefreshCw,
-  Sparkles,
-  Languages
+  Sparkles
 } from 'lucide-react';
 import type { SummaryData } from '../../types';
 
@@ -19,7 +18,7 @@ import type { SummaryData } from '../../types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface ModernSummaryProps {

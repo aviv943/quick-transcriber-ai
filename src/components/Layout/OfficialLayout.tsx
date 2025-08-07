@@ -2,7 +2,6 @@ import React from 'react';
 import type { TranscriptionResult } from '../../types';
 import { AppSidebar } from '../app-sidebar';
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
 
 interface OfficialLayoutProps {
   children: React.ReactNode;

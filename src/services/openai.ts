@@ -1,6 +1,6 @@
 import type { TranscriptionRequest, TranscriptionResult, TranscriptionError, SummaryRequest, SummaryData, BatchProgress } from '../types';
 import { chunkAudioFile, combineChunkResults, estimateProcessingTime } from '../utils/audioProcessor';
-import type { AudioChunk, ChunkingProgress } from '../utils/audioProcessor';
+import type { ChunkingProgress } from '../utils/audioProcessor';
 
 class OpenAIService {
   private readonly baseUrl = 'https://api.openai.com/v1';
@@ -77,7 +77,7 @@ class OpenAIService {
   /**
    * Transcribes a single audio file (under 25MB)
    */
-  private async transcribeSingleFile(apiKey: string, request: TranscriptionRequest, chunkInfo?: { index: number, total: number }): Promise<string> {
+  private async transcribeSingleFile(apiKey: string, request: TranscriptionRequest): Promise<string> {
     // Create form data
     const formData = new FormData();
     formData.append('file', request.file);
@@ -314,7 +314,7 @@ class OpenAIService {
         let chunkSkipped = false;
         
         try {
-          transcription = await this.transcribeSingleFile(apiKey, chunkRequest, { index: i, total: chunks.length });
+          transcription = await this.transcribeSingleFile(apiKey, chunkRequest);
           transcriptions.push(transcription);
         } catch (chunkError: any) {
           console.error(`❌ [BATCH] Chunk ${i + 1}/${chunks.length} failed:`, chunkError);

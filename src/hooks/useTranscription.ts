@@ -71,7 +71,6 @@ export const useTranscription = () => {
       setIsGeneratingSummary(true);
       
       try {
-        const summaryStartTime = Date.now();
         const summaryData = await openAIService.generateSummary(apiKey, {
           text: transcriptionResult.text,
           audioFileName: transcriptionResult.audioFileName,
@@ -147,8 +146,6 @@ export const useTranscription = () => {
     setRegeneratingIds(prev => new Set([...prev, resultId]));
 
     try {
-      const startTime = Date.now();
-      
       const summaryData = await openAIService.generateSummary(apiKey, {
         text: result.text,
         audioFileName: result.audioFileName,

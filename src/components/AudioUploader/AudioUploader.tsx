@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import type { AudioFile } from '../../types';
-import { formatFileSize, isAudioFile } from '../../utils/file';
+import { isAudioFile } from '../../utils/file';
 import './AudioUploader.css';
 
 interface AudioUploaderProps {
