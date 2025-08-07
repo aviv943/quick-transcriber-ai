@@ -1,52 +1,32 @@
-# Multi-stage build for optimized production image
-FROM node:18-alpine AS builder
+# Use an official Node.js runtime as a parent image
+FROM node:18-slim AS build
 
-# Set working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy package files
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install
 
-# Copy source code
+# Copy the rest of the application source code
 COPY . .
 
-# Build the application
+# Build the React app
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine AS production
+# Use an official NGINX image to serve the build
+FROM nginx:stable-alpine
 
-# Install Node.js for any runtime needs (optional)
-RUN apk add --no-cache nodejs npm
+# Copy the built React app from the previous stage to the NGINX directory
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy built application from builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy custom nginx configuration for Quick Transcriber AI
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Create a non-root user
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001
-
-# Set proper permissions
-RUN chown -R nextjs:nodejs /usr/share/nginx/html && \
-    chown -R nextjs:nodejs /var/cache/nginx && \
-    chown -R nextjs:nodejs /var/log/nginx && \
-    chown -R nextjs:nodejs /etc/nginx/conf.d
-
-# Switch to non-root user
-USER nextjs
-
-# Expose port
+# Expose the default NGINX port
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost/ || exit 1
-
-# Start nginx
+# Start NGINX
 CMD ["nginx", "-g", "daemon off;"]

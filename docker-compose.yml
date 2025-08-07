@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  quick-transcriber-ai:
+    image: aviv943/quick-transcriber-ai:latest
+    ports:
+      - "3000:80"
+    container_name: quick-transcriber-ai
+    restart: unless-stopped
